@@ -1,0 +1,17 @@
+---
+
+- name: Configure Web Servers
+  hosts: Web
+  tasks:
+    - name: web
+      block:
+        - import_role:
+            name: _init
+            tasks_from: firewall
+        - import_role:
+            name: web
+            tasks_from: nginx
+      rescue:
+        - name: print error message
+          debug:
+            msg: "Failed"

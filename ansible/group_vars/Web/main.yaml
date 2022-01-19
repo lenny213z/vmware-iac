@@ -1,0 +1,7 @@
+---
+# Firewall Default Rules for Centos8
+firewall_default_services:
+- cockpit # configured but not used 
+- dhcpv6-client
+- ssh
+...

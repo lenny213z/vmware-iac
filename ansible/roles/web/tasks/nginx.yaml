@@ -1,0 +1,45 @@
+---
+- name: install nginx and php
+  become: true
+  dnf:
+    name: "{{item}}"
+    state: latest
+  loop:
+    - nginx
+    - php
+  tags:
+    - web
+    - nginx
+
+- name: enable and start nginx
+  become: true
+  service:
+    name: nginx
+    state:  started
+    enabled: yes
+  tags:
+    - web
+    - nginx
+
+- name: configure nginx
+  become: true
+  template:
+    src: index.html.j2
+    dest: /usr/share/nginx/html/index.html
+
+
+- name: add web services to firewall
+  become: true
+  ansible.posix.firewalld:
+    zone: public
+    service: "{{ item }}"
+    permanent: yes
+    state: enabled
+  loop: 
+    - "http"
+    - "https"
+  tags:
+    - web
+    - firewall
+  notify:
+    - restart firewall

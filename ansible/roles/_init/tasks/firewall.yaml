@@ -1,0 +1,28 @@
+- name: install firewalld if needed
+  become: true
+  dnf:
+    name: firewalld
+    state: latest
+  tags:
+    - firewall
+
+- name: ensure firewall is running
+  become: true
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+  tags:
+    - firewall
+
+- name: default firewall rules
+  become: true
+  ansible.posix.firewalld:
+    service: "{{ item }}"
+    permanent: yes
+    state: enabled
+  loop: "{{ firewall_default_services | flatten(levels=1) }}"
+  tags:
+    - firewall
+  notify:
+    - restart firewall

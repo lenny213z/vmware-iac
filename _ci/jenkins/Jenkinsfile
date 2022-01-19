@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+
+    environment {
+    }
+
+    parameters {
+        choice(
+            name: 'Env',
+            choices: ['Dev', 'Prod'],
+            description: 'The environment to use'
+        )
+        choice(
+            name: 'App'
+            choice: ['Web-App'],
+            description: 'Which App to Build'
+        )
+    }
+
+    stages {
+        stage('Init') {
+            steps {
+                terraformInit()
+            }
+        }
+        stage('Apply') {
+            steps {
+                terraformApply()
+            }
+            steps {
+                input(message: 'Apply Terraform ?')
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Deleting Directory!'
+            deleteDir()
+        }
+    }
+}
+
+def terraformInit() {
+    sh("""
+        cd terraform/apps/${params.App.toLowerCase()};
+        terraform init
+    """)
+}
+
+def terraformApply() {
+    sh("""
+        bin/apply.sh -e ${params.Env.toLowerCase()} -a ${params.App.toLowerCase()}
+    """)
+}
+

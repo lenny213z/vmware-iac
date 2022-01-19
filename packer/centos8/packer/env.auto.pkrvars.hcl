@@ -1,0 +1,1 @@
+/Users/ribarski/OneDrive - Progress Software Corporation/Devnet/_devops_upskill/_final-assigment-demo/environment/dev/centos8.auto.pkrvars.hcl

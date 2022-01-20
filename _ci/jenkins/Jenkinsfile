@@ -1,34 +1,71 @@
 pipeline {
     agent any
 
-    environment {
+    parameters {
+        choice (
+            name: 'Env',
+            choices: ['Dev', 'Prod']
+        )
+        choice (
+            name: 'Apps',
+            choices: ['Web-App', 'Base', 'All']
+        )
+        choice(
+            name: 'Action',
+            choices: ['Build', 'Destroy']
+        )
     }
 
-    parameters {
-        choice(
-            name: 'Env',
-            choices: ['Dev', 'Prod'],
-            description: 'The environment to use'
-        )
-        choice(
-            name: 'App'
-            choice: ['Web-App'],
-            description: 'Which App to Build'
-        )
+    environments {
+        ROOTDIR="( cd -- "$( dirname -- "$(dirname -- "${BASH_SOURCE[0]}")" )" &> /dev/null && pwd )"
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                url: 'https://github.com/lenny213z/vmware-iac.git'
+
+                sh """
+                ls -all
+                """
+            }
+        }
         stage('Init') {
             steps {
                 terraformInit()
             }
         }
-        stage('Apply') {
+        stage('Plan') {
             steps {
-                terraformApply()
-            }
-            steps {
-                input(message: 'Apply Terraform ?')
+                script {
+                    def secrets = [
+                        [path: 'secret/data/personal-keys/ribarski/nsxtpoc/akeyless_id', 
+                        secretValues: [
+                            [envVar: 'TF_VAR_AKEYLESS_ACCESS_ID', vaultKey: 'data']
+                            ]
+                        ],
+                        [path: 'secret/data/personal-keys/ribarski/nsxtpoc/akeyless_key',
+                        secretValues: [
+                            [envVar: 'TF_VAR_AKEYLESS_ACCESS_KEY', vaultKey: 'data']
+                            ]
+                        ]
+                    ]
+                    
+                    if(params.Action == 'Destroy') {
+                        env.Destroy = '-destroy'
+                    } else {
+                        env.Destroy = ""
+                    }
+
+                    withVault(vaultSecrets: secrets) {
+                        sh ("""
+                            ln -s -f ${ROOTDIR}/environment/${params.Env.toLowerCase()}/${params.Apps.toLowerCase()}.tfvars ${ROOTDIR}/terraform/apps/${params.Apps.toLowerCase()}/env.auto.tfvars
+                            cd ./terraform/apps/${params.Apps.toLowerCase()};
+                            terraform plan ${env.Destroy} -no-color -out=tfout
+                        """)
+                }
+                }
             }
         }
     }
@@ -42,14 +79,8 @@ pipeline {
 
 def terraformInit() {
     sh("""
-        cd terraform/apps/${params.App.toLowerCase()};
+        cd ./terraform/apps/${params.Apps.toLowerCase()};
         terraform init
+        terraform workspace select ${params.Env.toLowerCase()} || terraform workspace new ${params.Env.toLowerCase()}
     """)
 }
-
-def terraformApply() {
-    sh("""
-        bin/apply.sh -e ${params.Env.toLowerCase()} -a ${params.App.toLowerCase()}
-    """)
-}
-

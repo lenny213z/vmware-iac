@@ -16,10 +16,6 @@ pipeline {
         )
     }
 
-    environments {
-        ROOTDIR="( cd -- "$( dirname -- "$(dirname -- "${BASH_SOURCE[0]}")" )" &> /dev/null && pwd )"
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -51,6 +47,8 @@ pipeline {
                             ]
                         ]
                     ]
+
+                    def workspace = pwd()
                     
                     if(params.Action == 'Destroy') {
                         env.Destroy = '-destroy'
@@ -60,7 +58,7 @@ pipeline {
 
                     withVault(vaultSecrets: secrets) {
                         sh ("""
-                            ln -s -f ${ROOTDIR}/environment/${params.Env.toLowerCase()}/${params.Apps.toLowerCase()}.tfvars ${ROOTDIR}/terraform/apps/${params.Apps.toLowerCase()}/env.auto.tfvars
+                            ln -s -f ${workspace}/environment/${params.Env.toLowerCase()}/${params.Apps.toLowerCase()}.tfvars ${workspace}/terraform/apps/${params.Apps.toLowerCase()}/env.auto.tfvars
                             cd ./terraform/apps/${params.Apps.toLowerCase()};
                             terraform plan ${env.Destroy} -no-color -out=tfout
                         """)

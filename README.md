@@ -1,3 +1,1 @@
 # vmware-iac
-
-pull

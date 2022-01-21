@@ -8,7 +8,7 @@ pipeline {
         )
         choice (
             name: 'Apps',
-            choices: ['Web-App', 'Base', 'All']
+            choices: ['Base', 'Web-App', 'DB-App']
         )
         choice(
             name: 'Action',

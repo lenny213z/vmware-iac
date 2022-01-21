@@ -1,5 +1,9 @@
-variable "vm_name" {
-  type = string
+variable "vm" {
+  type = map(any)
+  default = {
+    "name" = ""
+    "count" = ""
+  }
 }
 
 variable "AKEYLESS_ACCESS_ID" {

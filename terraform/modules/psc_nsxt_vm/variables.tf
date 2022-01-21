@@ -1,14 +1,4 @@
 
-variable "nsxt_segment" {
-  type = map(any)
-  default = {
-    name = ""
-    description = ""
-    cidr = ""
-    dhcp_ranges = ""
-  }
-}
-
 variable "tag_scope" {
   type = string
   default = ""
@@ -19,29 +9,16 @@ variable "tag" {
   default = ""
 }
 
-variable "connectivity_path" {
-  type = string
-  description = "Selects the Tier GW to connect to"
-  default = ""
-}
-
-variable "depends" {
-  type = list(string)
-  description = "Define dependancies if needed"
-  default = []
-}
-
-variable "dns_servers" {
-  type = list(string)
-  default = ["10.128.10.201","10.128.10.202"]
-}
-
 variable "nsxt_group" {
   type = map(any)
   default = {
     name = ""
     description = ""
   }
+}
+
+variable "network_id" {
+  type = string
 }
 
 variable "vm_count" {

@@ -6,37 +6,28 @@ locals {
   cluster   = "NSX-POC"
 }
 #
-module "t1gw" {
-  source              = "../../modules/psc_nsxt_t1gw"
-  nsx_t1gw  = {
-    name        = "grib-t1-gw"
-    description = "Terraform Deployed T1 GW"
-  }
+resource "vsphere_tag" "tag" {
+  name        = "Web"
+  category_id = "${data.terraform_remote_state.base.outputs.vm_category}"
+  description = "Managed by Terraform"
 }
 #
 module "web" {
   source              = "../../modules/psc_nsxt_vm"
-  connectivity_path   = module.t1gw.path
-  depends             = ["module.t1gw"]
   dc                  = local.dc
   datastore           = local.datastore
   cluster             = local.cluster
-  vm_name             = "${var.vm_name}"
-  vm_count            = "2"
+  vm_name             = "${var.vm["name"]}"
+  vm_count            = "${var.vm["count"]}"
   vm_template         = "centos8_packer_template"
-  nsxt_segment        = {
-    name              = "web"
-    description       = "Web Segment"
-    cidr              = "10.65.52.1/25"
-    dhcp_ranges       = "10.65.52.10-10.65.52.120"
-  }
+  network_id          = "${data.vsphere_network.segment.id}"
   tag_scope           = "Tier"
-  tag                 = "Web"
+  tag                 = "${vsphere_tag.tag.id}"
 }
 #
 module "web-lb" {
   source              = "../../modules/psc_nsxt_lb"
-  connectivity_path   = module.t1gw.path
+  connectivity_path   = data.terraform_remote_state.base.outputs.t1_path
   lb = {
     name              = "web-lb"
     size              = "SMALL"
@@ -53,7 +44,7 @@ module "web-lb" {
     description       = "Web Servers Pool"
     algorithm         = "ROUND_ROBIN"
   }
-  members_group       = module.web.group_path
+  members_group       = data.terraform_remote_state.base.outputs.group["Web"][0]
   tag_scope           = "Tier"
   tag                 = "Web"
 }
@@ -67,8 +58,8 @@ module "web-fw" {
   rules               = [ {
     name = "Microsegment"
     action = "DROP"
-    dst = [module.web.group_path]
-    src = [module.web.group_path]
+    dst = [data.terraform_remote_state.base.outputs.group["Web"][0]]
+    src = [data.terraform_remote_state.base.outputs.group["Web"][0]]
   } ]
   tag_scope           = "Tier"
   tag                 = "Web"

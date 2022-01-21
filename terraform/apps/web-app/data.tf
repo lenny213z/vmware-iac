@@ -21,3 +21,12 @@ data "akeyless_secret" "nsxtuser" {
 data "akeyless_secret" "nsxtsecret" {
     path        = "/personal-keys/ribarski/nsxtpoc/nsxtsecret"
 }
+
+data "vsphere_datacenter" "datacenter" {
+  name = "TP-CorpIT"
+}
+
+data "vsphere_network" "segment" {
+  name          = "${data.terraform_remote_state.base.outputs.name["Web"][0]}"
+  datacenter_id = "${data.vsphere_datacenter.datacenter.id}"
+}

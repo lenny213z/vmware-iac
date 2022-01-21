@@ -89,7 +89,7 @@ function apply() {
 
     0)
     printf "No Terraform changes\n"
-#    apply_ansible "$app"
+    apply_ansible "$app"
     ;;
 
     2)
@@ -100,7 +100,7 @@ function apply() {
       printf "Exit\n"
       exit 0
     fi
-#    apply_ansible "$app"
+    apply_ansible "$app"
     ;;
 
     *)
@@ -116,6 +116,8 @@ if [[ -z $APP ]];then
   printf "Will apply all Apps\n"
   for app in "${ROOTDIR}"/terraform/apps/*/;do
     apply "$app"
+    echo "Sleep for 20s"
+    sleep 20
     printf "Done!\n"
   done 
 else

@@ -1,1 +1,4 @@
-vm_name = "web"
+vm = {
+    "name" = "web"
+    "count" = "1"
+}

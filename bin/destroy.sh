@@ -63,7 +63,7 @@ function destroy() {
   set +e
   if [ ENV="dev" ]; then
    printf "Auto Approved for '%s' environment.\n" $ENV
-   terraform destroy --auto-approve
+   terraform destroy
    rm -rf env.auto.tfvars
    rm -rf ${app_name}_${ENV}.plan
    else

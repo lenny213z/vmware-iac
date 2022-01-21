@@ -1,4 +1,4 @@
 vm = {
-    "name" = "web"
-    "count" = "1"
+  "name"  = "web"
+  "count" = "1"
 }

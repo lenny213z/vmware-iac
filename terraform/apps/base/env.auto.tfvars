@@ -1,0 +1,1 @@
+/Users/ribarski/Library/CloudStorage/OneDrive-ProgressSoftwareCorporation/Devnet/_devops_upskill/_final-assigment-demo/environment/dev/base.tfvars

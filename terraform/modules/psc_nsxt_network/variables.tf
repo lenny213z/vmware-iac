@@ -1,48 +1,48 @@
 variable "nsx_t1gw" {
   type = map(any)
   default = {
-    name = ""
+    name        = ""
     description = ""
-  }  
+  }
 }
 
 variable "nsxt_tag_scope" {
-  type = string
+  type    = string
   default = "project"
 }
 
 variable "nsxt_tag" {
-  type = string
+  type    = string
   default = "terraform"
 }
 
 variable "tag_scope" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "tag" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "nsxt_segment" {
   type = map(any)
   default = {
-    name = ""
+    name        = ""
     description = ""
-    cidr = ""
+    cidr        = ""
     dhcp_ranges = ""
   }
 }
 
 variable "dns_servers" {
-  type = list(string)
-  default = ["10.128.10.201","10.128.10.202"]
+  type    = list(string)
+  default = ["10.128.10.201", "10.128.10.202"]
 }
 
 variable "connectivity_path" {
-  type = string
+  type        = string
   description = "Selects the Tier GW to connect to"
-  default = ""
+  default     = ""
 }

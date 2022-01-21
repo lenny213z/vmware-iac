@@ -12,26 +12,26 @@ data "nsxt_policy_dhcp_server" "dhcp" {
 }
 #
 data "akeyless_secret" "vcsrv" {
-    path        = "/personal-keys/ribarski/nsxtpoc/vcsrv"
+  path = "/personal-keys/ribarski/nsxtpoc/vcsrv"
 }
 
 data "akeyless_secret" "vcuser" {
-    path        = "/personal-keys/ribarski/nsxtpoc/vcuser"
+  path = "/personal-keys/ribarski/nsxtpoc/vcuser"
 }
 
 data "akeyless_secret" "vcsecret" {
-    path        = "/personal-keys/ribarski/nsxtpoc/vcsecret"
+  path = "/personal-keys/ribarski/nsxtpoc/vcsecret"
 }
 
 data "akeyless_secret" "nsxtsrv" {
-    path        = "/personal-keys/ribarski/nsxtpoc/nsxtsrv"
+  path = "/personal-keys/ribarski/nsxtpoc/nsxtsrv"
 }
 
 data "akeyless_secret" "nsxtuser" {
-    path        = "/personal-keys/ribarski/nsxtpoc/nsxtuser"
+  path = "/personal-keys/ribarski/nsxtpoc/nsxtuser"
 }
 
 data "akeyless_secret" "nsxtsecret" {
-    path        = "/personal-keys/ribarski/nsxtpoc/nsxtsecret"
+  path = "/personal-keys/ribarski/nsxtpoc/nsxtsecret"
 }
 #

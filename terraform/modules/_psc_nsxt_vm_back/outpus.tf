@@ -1,5 +1,5 @@
 output "group_path" {
-    value = nsxt_policy_group.nsxt_group.path
+  value = nsxt_policy_group.nsxt_group.path
 }
 
 #output "vm_ip" {

@@ -2,50 +2,50 @@
 variable "nsxt_segment" {
   type = map(any)
   default = {
-    name = ""
+    name        = ""
     description = ""
-    cidr = ""
+    cidr        = ""
     dhcp_ranges = ""
   }
 }
 
 variable "tag_scope" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "tag" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "connectivity_path" {
-  type = string
+  type        = string
   description = "Selects the Tier GW to connect to"
-  default = ""
+  default     = ""
 }
 
 variable "depends" {
-  type = list(string)
+  type        = list(string)
   description = "Define dependancies if needed"
-  default = []
+  default     = []
 }
 
 variable "dns_servers" {
-  type = list(string)
-  default = ["10.128.10.201","10.128.10.202"]
+  type    = list(string)
+  default = ["10.128.10.201", "10.128.10.202"]
 }
 
 variable "nsxt_group" {
   type = map(any)
   default = {
-    name = ""
+    name        = ""
     description = ""
   }
 }
 
 variable "vm_count" {
-  type = string
+  type    = string
   default = "1"
 }
 
@@ -70,11 +70,11 @@ variable "vm_template" {
 }
 
 variable "nsxt_tag_scope" {
-  type = string
+  type    = string
   default = "project"
 }
 
 variable "nsxt_tag" {
-  type = string
+  type    = string
   default = "terraform"
 }

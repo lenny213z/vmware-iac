@@ -3,38 +3,38 @@
 variable "dfw" {
   type = map(any)
   default = {
-    name = ""
+    name        = ""
     description = ""
   }
 }
 
 variable "microsegmentation" {
-  type = bool
+  type    = bool
   default = true
 }
 
 variable "nsxt_group" {
-  type = list(string)
+  type    = list(string)
   default = ["any"]
 }
 
 variable "tag_scope" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "tag" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "nsxt_tag_scope" {
-  type = string
+  type    = string
   default = "project"
 }
 
 variable "nsxt_tag" {
-  type = string
+  type    = string
   default = "terraform"
 }
 
@@ -46,9 +46,9 @@ variable "rules" {
     dst    = list(string)
   }))
   default = [{
-    name    = ""
-    action  = "DROP"
-    src     = ["any"]
-    dst     = ["any"]
+    name   = ""
+    action = "DROP"
+    src    = ["any"]
+    dst    = ["any"]
   }]
 }

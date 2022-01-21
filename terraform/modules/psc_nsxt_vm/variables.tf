@@ -1,18 +1,18 @@
 
 variable "tag_scope" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "tag" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "nsxt_group" {
   type = map(any)
   default = {
-    name = ""
+    name        = ""
     description = ""
   }
 }
@@ -22,7 +22,7 @@ variable "network_id" {
 }
 
 variable "vm_count" {
-  type = string
+  type    = string
   default = "1"
 }
 
@@ -47,11 +47,11 @@ variable "vm_template" {
 }
 
 variable "nsxt_tag_scope" {
-  type = string
+  type    = string
   default = "project"
 }
 
 variable "nsxt_tag" {
-  type = string
+  type    = string
   default = "terraform"
 }

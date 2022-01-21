@@ -4,22 +4,22 @@
 # Gropus we created earlier
 #
 resource "nsxt_policy_security_policy" "firewall_section" {
-  display_name = "${var.dfw["name"]}"
-  description  = "${var.dfw["description"]}"
+  display_name = var.dfw["name"]
+  description  = var.dfw["description"]
   category     = "Application"
   locked       = "false"
   stateful     = "true"
   tag {
-    scope = "${var.nsxt_tag_scope}"
-    tag   = "${var.nsxt_tag}"
+    scope = var.nsxt_tag_scope
+    tag   = var.nsxt_tag
   }
   tag {
-    scope = "${var.tag_scope}"
-    tag   = "${var.tag}"
+    scope = var.tag_scope
+    tag   = var.tag
   }
-  
+
   dynamic "rule" {
-    for_each             = "${var.rules}"
+    for_each = var.rules
     content {
       display_name       = rule.value.name
       action             = rule.value.action
@@ -29,9 +29,9 @@ resource "nsxt_policy_security_policy" "firewall_section" {
   }
   # Allow all other communications 
   rule {
-    display_name       = "External"
-    description        = "Allow all traffic to and from external networks"
-    action             = "ALLOW"
-    logged             = "false"
+    display_name = "External"
+    description  = "Allow all traffic to and from external networks"
+    action       = "ALLOW"
+    logged       = "false"
   }
 }

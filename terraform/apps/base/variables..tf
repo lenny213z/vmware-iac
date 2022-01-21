@@ -1,14 +1,14 @@
 #
 variable "AKEYLESS_ACCESS_ID" {
-  type = string
+  type        = string
   description = "Define Environment Variable TF_VAR_AKEYLESS_ID"
-  default = ""
+  default     = ""
 }
 
 variable "AKEYLESS_ACCESS_KEY" {
-  type = string
+  type        = string
   description = "Define Local Environment Variable TF_VAR_AKEYLESS_KEY"
-  default = ""
+  default     = ""
 }
 
 variable "nsxt_segment" {
@@ -23,7 +23,7 @@ variable "nsxt_segment" {
 variable "nsx_t1gw" {
   type = map(any)
   default = {
-    name = ""
+    name        = ""
     description = ""
-  }  
+  }
 }

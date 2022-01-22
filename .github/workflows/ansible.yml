@@ -27,7 +27,7 @@ jobs:
         # Paths to ansible files (i.e., playbooks, tasks, handlers etc..)
         # or valid Ansible directories according to the Ansible role
         # directory structure.
-        target: "./ansible"
+        entryPoint: "./ansible"
         # Arguments to be passed to the ansible-lint
         # Options:
         #   -q                    quieter, although not silent output

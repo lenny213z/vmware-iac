@@ -5,3 +5,4 @@ secrets/ansible-vault/*
 terraform/apps/*/*terraform*
 terraform/apps/*/*.plan
 terraform/workspaces/*
+_unused_code*

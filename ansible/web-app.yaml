@@ -5,7 +5,7 @@
     - name: web
       block:
         - import_role:
-            name: _init
+            name: base
             tasks_from: firewall
         - import_role:
             name: web

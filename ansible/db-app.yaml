@@ -1,15 +1,12 @@
 ---
-- name: Configure Web Servers
-  hosts: Web
+- name: Configure DB Servers
+  hosts: DB
   tasks:
-    - name: web
+    - name: db
       block:
         - import_role:
             name: _init
             tasks_from: firewall
-        - import_role:
-            name: web
-            tasks_from: nginx
       rescue:
         - name: print error message
           debug:

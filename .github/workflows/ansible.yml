@@ -17,7 +17,7 @@ jobs:
 
       # Runs Ansible Lint
     - name: Lint Ansible Playbook
-      uses: ansible/ansible-lint-action@main
+      uses: ansible/ansible-lint-action@151b9a2
       with:
         # [required]
         # Paths to ansible files (i.e., playbooks, tasks, handlers etc..)

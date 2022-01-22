@@ -57,7 +57,15 @@ pipeline {
             }
         }
         stage('Apply Ansible if Any') {
+            when {
+                param.Action == 'Apply'
+            }
             steps {
+                sh ("""
+                    python -m pip install virtualenv --user
+                    virtualenv iac
+                    source ./iac/bin/activate
+                """)
                 applyAnsible()
             }
         }

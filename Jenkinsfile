@@ -106,8 +106,8 @@ def applyAnsible () {
     if(fileExists("${workspace}/ansible/${params.Apps.toLowerCase()}.yaml")) {
         withCredentials([
             file(credentialsId: 'ansible_hosts', variable: 'host'), 
-            sshUserPrivateKey(credentialsId: 'ansible_ssh', keyFileVariable: 'ssh'), 
-            string(credentialsId: 'ansible_vault', variable: 'vault')
+            file(credentialsId: 'ansible_vault', variable: 'vault'),
+            sshUserPrivateKey(credentialsId: 'ansible_ssh', keyFileVariable: 'ssh')
             ]) {
                 sh ("""
                     printf "We have a playbook for '%s'. Appling Ansible...\n" ${params.Apps.toLowerCase()}

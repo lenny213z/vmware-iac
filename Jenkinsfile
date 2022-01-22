@@ -44,7 +44,7 @@ pipeline {
             }
             steps {
                 sh("""
-                    python -m pip install virtualenv --user
+                    python3 -m pip install virtualenv --user
                     virtualenv iac
                     source ./iac/bin/activate
                     pip install -r requirements.txt

@@ -61,16 +61,9 @@ function destroy() {
   terraform workspace select ${ENV} || terraform workspace new ${ENV}
 
   set +e
-  if [ ENV="dev" ]; then
-   printf "Auto Approved for '%s' environment.\n" $ENV
-   terraform destroy
-   rm -rf env.auto.tfvars
-   rm -rf ${app_name}_${ENV}.plan
-   else
-   terraform destroy
-   rm -rf env.auto.tfvars
-   rm -rf ${app_name}_${ENV}.plan
-  fi
+  terraform destroy
+  rm -rf env.auto.tfvars
+  rm -rf ${app_name}_${ENV}.plan
   popd > /dev/null
 }
 

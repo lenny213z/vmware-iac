@@ -34,36 +34,12 @@ pipeline {
         }
         stage('Plan') {
             steps {
-                script {
-                    def secrets = [
-                        [path: 'secret/data/personal-keys/ribarski/nsxtpoc/akeyless_id', 
-                        secretValues: [
-                            [envVar: 'TF_VAR_AKEYLESS_ACCESS_ID', vaultKey: 'data']
-                            ]
-                        ],
-                        [path: 'secret/data/personal-keys/ribarski/nsxtpoc/akeyless_key',
-                        secretValues: [
-                            [envVar: 'TF_VAR_AKEYLESS_ACCESS_KEY', vaultKey: 'data']
-                            ]
-                        ]
-                    ]
-
-                    def workspace = pwd()
-                    
-                    if(params.Action == 'Destroy') {
-                        env.Destroy = '-destroy'
-                    } else {
-                        env.Destroy = ""
-                    }
-
-                    withVault(vaultSecrets: secrets) {
-                        sh ("""
-                            ln -s -f ${workspace}/environment/${params.Env.toLowerCase()}/${params.Apps.toLowerCase()}.tfvars ${workspace}/terraform/apps/${params.Apps.toLowerCase()}/env.auto.tfvars
-                            cd ./terraform/apps/${params.Apps.toLowerCase()};
-                            terraform plan ${env.Destroy} -no-color -out=tfout
-                        """)
-                }
-                }
+                terraformPlan()
+            }
+        }
+        stage('Approval') {
+            steps {
+                input(message: 'Apply Terraform ?')
             }
         }
     }
@@ -80,5 +56,20 @@ def terraformInit() {
         cd ./terraform/apps/${params.Apps.toLowerCase()};
         terraform init
         terraform workspace select ${params.Env.toLowerCase()} || terraform workspace new ${params.Env.toLowerCase()}
+    """)
+}
+
+def terraformPlan() {
+    // Setting Terraform Destroy flag
+    if(params.Action == 'Destroy') {
+        env.DESTROY = '-destroy'
+    } else {
+        env.DESTROY = ""
+    }
+
+    sh("""
+        ln -s -f ${workspace}/environment/${params.Env.toLowerCase()}/${params.Apps.toLowerCase()}.tfvars ${workspace}/terraform/apps/${params.Apps.toLowerCase()}/env.auto.tfvars
+        cd ./terraform/apps/${params.Apps.toLowerCase()};
+        terraform plan ${env.Destroy} -no-color -out=tfout
     """)
 }

@@ -36,6 +36,21 @@ pipeline {
                 """
             }
         }
+        stage('Setup Env') {
+            when {
+                expression {
+                    param.Action == 'Apply'
+                }
+            }
+            steps {
+                sh("""
+                    python -m pip install virtualenv --user
+                    virtualenv iac
+                    source ./iac/bin/activate
+                    pip install -r requirements.txt
+                """)
+            }
+        }
         stage('Terraform Init') {
             steps {
                 terraformInit()
@@ -63,12 +78,6 @@ pipeline {
                 }
             }
             steps {
-                sh ("""
-                    python -m pip install virtualenv --user
-                    virtualenv iac
-                    source ./iac/bin/activate
-                    pip install -r requirements.txt
-                """)
                 applyAnsible()
             }
         }

@@ -1,4 +1,4 @@
 vm = {
   "name"  = "web"
-  "count" = "1"
+  "count" = "2"
 }

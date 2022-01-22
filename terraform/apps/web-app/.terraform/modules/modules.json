@@ -1,1 +1,0 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"web","Source":"../../modules/psc_nsxt_vm","Dir":"../../modules/psc_nsxt_vm"},{"Key":"web-fw","Source":"../../modules/psc_nsxt_security_policies","Dir":"../../modules/psc_nsxt_security_policies"},{"Key":"web-lb","Source":"../../modules/psc_nsxt_lb","Dir":"../../modules/psc_nsxt_lb"}]}

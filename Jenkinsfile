@@ -44,7 +44,8 @@ pipeline {
             }
             steps {
                 sh("""
-                    python3 -m pip install -r requirements.txt --user
+                    python3 -m pip install virtualenv --user
+                    virtualenv iac
                 """)
             }
         }

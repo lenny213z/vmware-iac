@@ -20,15 +20,17 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-      # Runs Ansible Lint
-    - name: Lint Ansible Playbook
-      uses: ansible/ansible-lint-action@v5.3.2
+    # Setup Python
+    - name: 'Setup Python'
+      uses: actions/setup-python@v2
       with:
-        # Paths to ansible files (i.e., playbooks, tasks, handlers etc..)
-        # or valid Ansible directories according to the Ansible role
-        # directory structure.
-        targets: "./"
-        # Arguments to be passed to the ansible-lint
-        # Options:
-        #   -q                    quieter, although not silent output
-        args: "-q"
+        python-version: 3.9
+    # Install Dependencies
+    - name: 'Install Ansible and Ansible Lynt'
+      run: |
+        python -m pip install --upgrade pip
+        pip install ansible ansible-lint
+    # Run Ansible Lint
+    - name: 'Lint Ansible'
+      run: |
+        ansible-lint -q

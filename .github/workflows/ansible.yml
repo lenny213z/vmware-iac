@@ -31,4 +31,4 @@ jobs:
         # Arguments to be passed to the ansible-lint
         # Options:
         #   -q                    quieter, although not silent output
-        args: "-q"
+        args: ""

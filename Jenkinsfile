@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        TF_VAR_AKEYLESS_ACCESS_ID   = credentials('jenkins-akeyless-key-id')
+        TF_VAR_AKEYLESS_ACCESS_KEY  = credentials('jenkins-akeyless-key-value')
+    }
+
     parameters {
         choice (
             name: 'Env',

@@ -17,7 +17,7 @@ jobs:
 
       # Runs Ansible Lint
     - name: Lint Ansible Playbook
-      uses: ansible/ansible-lint-action@151b9a224f53c80fdc2c7aed08f3671d190e7a9e
+      uses: ansible/ansible-lint-action@master
       with:
         # Paths to ansible files (i.e., playbooks, tasks, handlers etc..)
         # or valid Ansible directories according to the Ansible role

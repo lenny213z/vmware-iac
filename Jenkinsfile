@@ -39,7 +39,7 @@ pipeline {
         stage('Setup Env') {
             when {
                 expression {
-                    params.Action == 'Apply'
+                    params.Action = 'Apply'
                 }
             }
             steps {
@@ -74,7 +74,7 @@ pipeline {
         stage('Apply Ansible if Any') {
             when {
                 expression { 
-                    params.Action == 'Apply'
+                    params.Action = 'Apply'
                 }
             }
             steps {

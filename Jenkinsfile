@@ -4,6 +4,9 @@ pipeline {
     environment {
         TF_VAR_AKEYLESS_ACCESS_ID   = credentials('jenkins-akeyless-key-id')
         TF_VAR_AKEYLESS_ACCESS_KEY  = credentials('jenkins-akeyless-key-value')
+        AWS_PROFILE                 = "pinfos"
+        AWS_ACCESS_KEY_ID           = credentials('jenkins-aws-key-id')
+        AWS_SECRET_ACCESS_KEY       = credentials('jenkins-aws-key-value')
     }
 
     parameters {

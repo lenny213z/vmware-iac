@@ -1,6 +1,11 @@
+#
 data "terraform_remote_state" "base" {
-  backend = "local"
+  backend = "s3"
   config = {
-    path = "../../workspaces/base/${terraform.workspace}/terraform.tfstate"
+    bucket  = "grib-tlrk-trfm-state"
+    key     = "base/${terraform.workspace}/base.tfstate"
+    region  = "us-east-2"
+    profile = "pinfos"
+    encrypt = true
   }
 }

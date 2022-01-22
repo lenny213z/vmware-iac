@@ -44,8 +44,7 @@ pipeline {
             }
             steps {
                 sh("""
-                    python3 -m pip install virtualenv --user
-                    virtualenv iac
+                    whoami
                 """)
             }
         }

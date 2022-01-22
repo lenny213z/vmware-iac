@@ -47,6 +47,11 @@ pipeline {
                 input(message: 'Apply Terraform ?')
             }
         }
+        stage('Apply') {
+            steps {
+                terraformApply()
+            }
+        }
     }
     post {
         always {
@@ -76,5 +81,13 @@ def terraformPlan() {
         ln -s -f ${workspace}/environment/${params.Env.toLowerCase()}/${params.Apps.toLowerCase()}.tfvars ${workspace}/terraform/apps/${params.Apps.toLowerCase()}/env.auto.tfvars
         cd ./terraform/apps/${params.Apps.toLowerCase()};
         terraform plan ${env.Destroy} -no-color -out=tfout
+    """)
+}
+
+def terraformApply() {
+    sh("""
+        ln -s -f ${workspace}/environment/${params.Env.toLowerCase()}/${params.Apps.toLowerCase()}.tfvars ${workspace}/terraform/apps/${params.Apps.toLowerCase()}/env.auto.tfvars
+        cd ./terraform/apps/${params.Apps.toLowerCase()};
+        terraform apply tfout -no-color
     """)
 }

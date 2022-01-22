@@ -8,7 +8,6 @@ pipeline {
         AWS_ACCESS_KEY_ID           = credentials('jenkins-aws-key-id')
         AWS_SECRET_ACCESS_KEY       = credentials('jenkins-aws-key-value')
         VAULT_ADDR                  = "https://hvp.akeyless.io"
-        ANSIBLE_PLAYBOOK            = "ansible/${params.Apps.toLowerCase()}.yaml"
     }
 
     parameters {
@@ -41,7 +40,6 @@ pipeline {
             when {
                 expression {
                     params.Action == 'Build'
-                    ANSIBLE_PLAYBOOK == 'true'
                 }
             }
             steps {

@@ -4,5 +4,6 @@ secrets/ssh-keys/*
 secrets/ansible-vault/*
 terraform/apps/*/.terraform*
 terraform/apps/*/*.plan
+terraform/apps/*/*.auto.tfvars
 terraform/workspaces/*
 _unused_code*

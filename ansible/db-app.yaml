@@ -10,5 +10,5 @@
       rescue:
         - name: print error message
           debug:
-            msg: "Failed2"
+            msg: "Failed"
 ...

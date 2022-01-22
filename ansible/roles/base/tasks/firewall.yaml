@@ -1,8 +1,10 @@
 - name: install firewalld if needed
   become: true
   dnf:
-    name: firewalld
-    state: latest
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  loop:
+    - { name: 'firewalld', state: 'latest'}
   tags:
     - firewall
 

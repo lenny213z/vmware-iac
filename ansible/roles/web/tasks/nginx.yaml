@@ -2,7 +2,7 @@
 - name: install nginx and php
   become: true
   dnf:
-    name: "{{item}}"
+    name: "{{ item }}"
     state: latest
   loop:
     - nginx

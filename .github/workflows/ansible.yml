@@ -10,6 +10,11 @@ jobs:
     name: 'Ansible'
     runs-on: ubuntu-latest
 
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
@@ -17,7 +22,7 @@ jobs:
 
       # Runs Ansible Lint
     - name: Lint Ansible Playbook
-      uses: ansible/ansible-lint-action@master
+      uses: ansible/ansible-lint-action@v2
       with:
         # Paths to ansible files (i.e., playbooks, tasks, handlers etc..)
         # or valid Ansible directories according to the Ansible role

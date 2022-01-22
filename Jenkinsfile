@@ -8,6 +8,7 @@ pipeline {
         AWS_ACCESS_KEY_ID           = credentials('jenkins-aws-key-id')
         AWS_SECRET_ACCESS_KEY       = credentials('jenkins-aws-key-value')
         VAULT_ADDR                  = "https://hvp.akeyless.io"
+        ANSIBLE_PLAYBOOK            = "ansible/${params.Apps.toLowerCase()}.yaml"
     }
 
     parameters {
@@ -40,14 +41,12 @@ pipeline {
             when {
                 expression {
                     params.Action == 'Build'
+                    ANSIBLE_PLAYBOOK == 'true'
                 }
             }
             steps {
                 sh("""
-                    python3 -m pip install virtualenv --user
-                    virtualenv iac
-                    source ./iac/bin/activate
-                    pip install -r requirements.txt
+                    python3 -m pip install -r requirements.txt --user
                 """)
             }
         }
@@ -71,16 +70,16 @@ pipeline {
                 terraformApply()
             }
         }
-        stage('Apply Ansible if Any') {
-            when {
-                expression { 
-                    params.Action == 'Build'
-                }
-            }
-            steps {
-                applyAnsible()
-            }
-        }
+//        stage('Apply Ansible if Any') {
+//            when {
+//                expression { 
+//                    params.Action == 'Build'
+//                }
+//            }
+//            steps {
+//                applyAnsible()
+//            }
+//        }
     }
     post {
         always {

@@ -22,12 +22,12 @@ jobs:
 
       # Runs Ansible Lint
     - name: Lint Ansible Playbook
-      uses: ansible/ansible-lint-action@v4.1.0.post0
+      uses: ansible/ansible-lint-action@v4.1.0
       with:
         # Paths to ansible files (i.e., playbooks, tasks, handlers etc..)
         # or valid Ansible directories according to the Ansible role
         # directory structure.
-        entryPoint: "./"
+        entryPoint: ""
         # Arguments to be passed to the ansible-lint
         # Options:
         #   -q                    quieter, although not silent output

@@ -26,6 +26,7 @@
   template:
     src: index.html.j2
     dest: /usr/share/nginx/html/index.html
+    mode: 0644
 
 
 - name: add web services to firewall

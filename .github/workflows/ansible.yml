@@ -22,7 +22,7 @@ jobs:
 
       # Runs Ansible Lint
     - name: Lint Ansible Playbook
-      uses: ansible/ansible-lint-action@v2
+      uses: ansible/ansible-lint-action@v5.3.2
       with:
         # Paths to ansible files (i.e., playbooks, tasks, handlers etc..)
         # or valid Ansible directories according to the Ansible role

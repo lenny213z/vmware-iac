@@ -59,8 +59,9 @@ pipeline {
         }
         stage('Apply Ansible if Any') {
             when {
-                param.Action == 'Apply'
-                expression { ANSIBLE_PLAYBOOK == 'true' }
+                expression { ANSIBLE_PLAYBOOK == 'true' 
+                             param.Action == 'Apply'
+                }
             }
             steps {
                 sh ("""

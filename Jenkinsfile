@@ -7,6 +7,7 @@ pipeline {
         AWS_PROFILE                 = "pinfos"
         AWS_ACCESS_KEY_ID           = credentials('jenkins-aws-key-id')
         AWS_SECRET_ACCESS_KEY       = credentials('jenkins-aws-key-value')
+        VAULT_ADDR                  = "https://hvp.akeyless.io"
     }
 
     parameters {
@@ -35,12 +36,12 @@ pipeline {
                 """
             }
         }
-        stage('Init') {
+        stage('Terraform Init') {
             steps {
                 terraformInit()
             }
         }
-        stage('Plan') {
+        stage('Terraform Plan') {
             steps {
                 terraformPlan()
             }
@@ -50,9 +51,14 @@ pipeline {
                 input(message: 'Apply Terraform ?')
             }
         }
-        stage('Apply') {
+        stage('Terraform Apply') {
             steps {
                 terraformApply()
+            }
+        }
+        stage('Apply Ansible if Any') {
+            steps {
+                applyAnsible()
             }
         }
     }
@@ -93,4 +99,25 @@ def terraformApply() {
         cd ./terraform/apps/${params.Apps.toLowerCase()};
         terraform apply tfout -no-color
     """)
+}
+
+def applyAnsible () {
+    // Check if there's an Ansible Playbook and execute it
+    if(fileExists("${workspace}/ansible/${params.Apps.toLowerCase()}.yaml")) {
+        withCredentials([
+            file(credentialsId: 'ansible_hosts', variable: 'host'), 
+            sshUserPrivateKey(credentialsId: 'ansible_ssh', keyFileVariable: 'ssh'), 
+            string(credentialsId: 'ansible_vault', variable: 'vault')
+            ]) {
+                sh ("""
+                    printf "We have a playbook for '%s'. Appling Ansible...\n" ${params.Apps.toLowerCase()}
+                    export ANSIBLE_CONFIG="${workspace}/ansible/ansible.cfg"
+                    ansible-playbook -i "${host}" "${workspace}/ansible/${params.Apps.toLowerCase()}.yaml" --key-file "${ssh}" --vault-password-file "${vault}"
+                """)
+            }
+    } else {
+        sh ("""
+            printf "No Ansible Playbooks found for this App.\n"
+        """)
+    }
 }

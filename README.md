@@ -25,7 +25,7 @@ Ideally, the following process can be used to proper use / test the demo.
 
 ## Used Technologies
 
-### Packer 
+### [Packer] (https://www.packer.io/ 'Packer')
 Packer is a open source tool that enables the management of identical machine images for multiple platforms from a source template. The goal would be to have a single, common image that developers can use to test their code or to use in production environment. 
 
 In the current demo, Packer is used to build a source image for the VMs from a local stored ISO file. The ISO is Centos8-Stream. 
@@ -46,7 +46,7 @@ Terrafrom uses Akeyless Vault to get the necessary secrets for Vsphere and NSXT 
 
 The following Diagram Provides a High Level Design, when all Apps are applied. 
 
-
+![Network Diagram](https://github.com/lenny213z/vmware-iac/blob/main/diagram.png "Network Diagram")
 
 There are 3 Apps that help build the Demo 
 
@@ -61,7 +61,7 @@ Similar to Web-App
 
 The Terraform Structure includes the use of modules that build multiple resources in stacks.
 
-The state and lock files are store in an AWS S3 bucket and DynamoDB so that they can be used and monitored by multiple services and teams. 
+The state and lock files are stored in an AWS S3 bucket and DynamoDB so that they can be used and monitored by multiple services and teams. 
 
 **NOTE:** In order to build the Infrastructure, please ensure that you have added the AWS S3 backend requirements first.
 
@@ -75,9 +75,15 @@ The example demo uses a dynamic inventory build based on the information in Vmwa
 The ansible playbooks are applied automatically with **bin/apply.sh** if the right app is selected. 
 
 ## Jenkins
+Jenkins is an open-source automation server that can support any team for build a CI/CD process for their project. 
+
+The Jenkins server uses the provided declarative pipeline to fetch and build the provided terraform and ansible code. The pipeline uses the JenkinsFile in the repo. The Pipeline is run manually onPrem and requires the selection of the environment, application and action to be applied. The pipeline can be used for both Building and Destroying the infrastructure. 
+
+# Security and Tests 
+
+- The demo uses centralized vault manager that stores all static secrets, ssh-keys and secret files where needed. 
+- Github Actions are used for managing the format for terraform and ansible
 
 
-
-- jenkins
 - github actions
 - github secrets

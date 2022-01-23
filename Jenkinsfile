@@ -62,7 +62,8 @@ pipeline {
                     return params.Action == 'Build'
                 }
                 expression {
-                    return params.Apps == 'DB-App' || 'Web-App'
+                    params.Apps == 'DB-App' || 
+                    params.Apps == 'Web-App'
                 }
             }
             steps {
@@ -80,7 +81,8 @@ pipeline {
                     return params.Action == 'Build'
                 }
                 expression {
-                    return params.Apps == 'DB-App' || 'Web-App'
+                    params.Apps == 'DB-App' || 
+                    params.Apps == 'Web-App'
                 }
             }
             steps {

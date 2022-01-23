@@ -36,22 +36,6 @@ pipeline {
                 """
             }
         }
-        stage('Setup Ansible Env') {
-            when {
-                expression {
-                    return params.Action == 'Build'
-                    return params.Apps == 'DB-App' || 'Web-App'
-                }
-            }
-            steps {
-                sh("""
-                    export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-                    virtualenv iac
-                    source ./iac/bin/activate
-                    pip install -r requirements.txt
-                """)
-            }
-        }
         stage('Terraform Init') {
             steps {
                 terraformInit()
@@ -70,6 +54,22 @@ pipeline {
         stage('Terraform Apply') {
             steps {
                 terraformApply()
+            }
+        }
+        stage('Setup Ansible Env') {
+            when {
+                expression {
+                    return params.Action == 'Build'
+                    return params.Apps == 'DB-App' || 'Web-App'
+                }
+            }
+            steps {
+                sh("""
+                    export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+                    virtualenv iac
+                    source ./iac/bin/activate
+                    pip install -r requirements.txt
+                """)
             }
         }
         stage('Apply Ansible if Any') {
@@ -130,6 +130,7 @@ def applyAnsible () {
         sshUserPrivateKey(credentialsId: 'ansible_ssh', keyFileVariable: 'ssh')
         ]) {
             sh ("""
+                source ./iac/bin/activate
                 printf "We have a playbook for '%s'. Appling Ansible...\n" ${params.Apps.toLowerCase()}
                 export ANSIBLE_CONFIG="${workspace}/ansible/ansible.cfg"
                 ansible-playbook -i "${host}" "${workspace}/ansible/${params.Apps.toLowerCase()}.yaml" --key-file "${ssh}" --vault-password-file "${vault}"

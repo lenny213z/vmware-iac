@@ -45,7 +45,10 @@ pipeline {
             }
             steps {
                 sh("""
-                    whoami
+                    export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+                    virtualenv iac
+                    source ./iac/bin/activate
+                    pip install -r requirements.txt
                 """)
             }
         }
@@ -69,16 +72,17 @@ pipeline {
                 terraformApply()
             }
         }
-//        stage('Apply Ansible if Any') {
-//            when {
-//                expression { 
-//                    params.Action == 'Build'
-//                }
-//            }
-//            steps {
-//                applyAnsible()
-//            }
-//        }
+        stage('Apply Ansible if Any') {
+            when {
+                expression {
+                    return params.Action == 'Build'
+                    return params.Apps == 'DB-App' || 'Web-App'
+                }
+            }
+            steps {
+                applyAnsible()
+            }
+        }
     }
     post {
         always {
@@ -120,22 +124,15 @@ def terraformApply() {
 }
 
 def applyAnsible () {
-    // Check if there's an Ansible Playbook and execute it
-    if(fileExists("${workspace}/ansible/${params.Apps.toLowerCase()}.yaml")) {
-        withCredentials([
-            file(credentialsId: 'ansible_hosts', variable: 'host'), 
-            file(credentialsId: 'ansible_vault', variable: 'vault'),
-            sshUserPrivateKey(credentialsId: 'ansible_ssh', keyFileVariable: 'ssh')
-            ]) {
-                sh ("""
-                    printf "We have a playbook for '%s'. Appling Ansible...\n" ${params.Apps.toLowerCase()}
-                    export ANSIBLE_CONFIG="${workspace}/ansible/ansible.cfg"
-                    ansible-playbook -i "${host}" "${workspace}/ansible/${params.Apps.toLowerCase()}.yaml" --key-file "${ssh}" --vault-password-file "${vault}"
-                """)
-            }
-    } else {
-        sh ("""
-            printf "No Ansible Playbooks found for this App.\n"
-        """)
-    }
+    withCredentials([
+        file(credentialsId: 'ansible_hosts', variable: 'host'), 
+        file(credentialsId: 'ansible_vault', variable: 'vault'),
+        sshUserPrivateKey(credentialsId: 'ansible_ssh', keyFileVariable: 'ssh')
+        ]) {
+            sh ("""
+                printf "We have a playbook for '%s'. Appling Ansible...\n" ${params.Apps.toLowerCase()}
+                export ANSIBLE_CONFIG="${workspace}/ansible/ansible.cfg"
+                ansible-playbook -i "${host}" "${workspace}/ansible/${params.Apps.toLowerCase()}.yaml" --key-file "${ssh}" --vault-password-file "${vault}"
+            """)
+        }
 }

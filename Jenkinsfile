@@ -36,11 +36,11 @@ pipeline {
                 """
             }
         }
-        stage('Setup Env') {
+        stage('Setup Ansible Env') {
             when {
                 expression {
-                    params.Action == 'Build'
-                    params.Apps == 'DB-App' || 'Web-App'
+                    return params.Action == 'Build'
+                    return params.Apps == 'DB-App' || 'Web-App'
                 }
             }
             steps {

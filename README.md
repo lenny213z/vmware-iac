@@ -25,13 +25,13 @@ Ideally, the following process can be used to proper use / test the demo.
 
 ## Used Technologies
 
-### [Packer] (https://www.packer.io/ 'Packer')
+### Packer
 Packer is a open source tool that enables the management of identical machine images for multiple platforms from a source template. The goal would be to have a single, common image that developers can use to test their code or to use in production environment. 
 
 In the current demo, Packer is used to build a source image for the VMs from a local stored ISO file. The ISO is Centos8-Stream. 
 The build image includes the minimal packages for most environments including, development tools and virtual agents. The packer script also includes minimal security hardening like enabling the firewall, adding a sudo user and disabling root access and password access. 
 
-use **bin/packer.sh -h** for more information
+use ***bin/packer.sh -h*** for more information
 
 The script uses Akeyless vault to receive the right authentication for the Vmware Vsphere Server. 
 
@@ -65,7 +65,7 @@ The state and lock files are stored in an AWS S3 bucket and DynamoDB so that the
 
 **NOTE:** In order to build the Infrastructure, please ensure that you have added the AWS S3 backend requirements first.
 
-use **bin/apply.sh -h** for information on how to apply terraform. 
+use ***bin/apply.sh -h*** for information on how to apply terraform. 
 
 ## Ansible
 Ansible is a radically simple IT automation engine that automates cloud provisioning, configuration management, application deployment, intra-service orchestration, and many other IT needs.
@@ -84,6 +84,11 @@ The Jenkins server uses the provided declarative pipeline to fetch and build the
 - The demo uses centralized vault manager that stores all static secrets, ssh-keys and secret files where needed. 
 - Github Actions are used for managing the format for terraform and ansible
 
-
-- github actions
+To-Do
 - github secrets
+- inspec
+
+# Further Development (example)
+- Add Monitoring with Splunk, but either adding Splunk Agent to the Packer template or adding it as a task in ansible playbook
+- Develop Documentation on how to use the Terraform Modules
+- Work with Akeyless to fix Jenkins Integration. 

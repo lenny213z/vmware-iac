@@ -1,6 +1,6 @@
 # This Resources create and configure a Load Balancer Service in NSXT
 resource "nsxt_policy_lb_service" "lb" {
-  display_name      = "${var.lb["name"]}"
+  display_name      = var.lb["name"]
   description       = var.lb["description"]
   size              = var.lb["size"]
   error_log_level   = "ERROR"

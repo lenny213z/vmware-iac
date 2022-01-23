@@ -57,10 +57,12 @@ pipeline {
             }
         }
         stage('Setup Ansible Env') {
-            when {
-                expression {
-                    return params.Action == 'Build'
-                    return params.Apps == 'DB-App' || 'Web-App'
+            when { 
+                allOf {
+                    expression {
+                        return params.Action == 'Build'
+                        return params.Apps == 'DB-App' || 'Web-App'
+                    }
                 }
             }
             steps {
@@ -73,10 +75,12 @@ pipeline {
             }
         }
         stage('Apply Ansible if Any') {
-            when {
-                expression {
-                    return params.Action == 'Build'
-                    return params.Apps == 'DB-App' || 'Web-App'
+            when { 
+                allOf {
+                    expression {
+                        return params.Action == 'Build'
+                        return params.Apps == 'DB-App' || 'Web-App'
+                    }
                 }
             }
             steps {

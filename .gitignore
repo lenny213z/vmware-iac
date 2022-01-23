@@ -1,4 +1,3 @@
-environment/*/*.pkrvars.hcl
 environment/*/*.vmware.yaml
 secrets/ssh-keys/*
 secrets/ansible-vault/*

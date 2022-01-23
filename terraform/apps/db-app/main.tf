@@ -22,7 +22,7 @@ module "db" {
   vm_template = "centos8_packer_template"
   network_id  = data.vsphere_network.segment.id
   tag_scope   = "Tier"
-  tag         = vsphere_tag.tag.id
+  tag         = "DB"
 }
 #
 module "db-fw" {

@@ -40,6 +40,7 @@ pipeline {
             when {
                 expression {
                     params.Action == 'Build'
+                    params.Apps == 'DB-App' || 'Web-App'
                 }
             }
             steps {

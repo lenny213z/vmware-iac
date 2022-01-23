@@ -26,7 +26,7 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
+        stage("Checkout") {
             steps {
                 git branch: 'main',
                 url: 'https://github.com/lenny213z/vmware-iac.git'
@@ -36,27 +36,27 @@ pipeline {
                 """
             }
         }
-        stage('Terraform Init') {
+        stage("Terraform Init") {
             steps {
                 terraformInit()
             }
         }
-        stage('Terraform Plan') {
+        stage("Terraform Plan - ${params.Action}") {
             steps {
                 terraformPlan()
             }
         }
-        stage('Approval') {
+        stage("Approval") {
             steps {
                 input(message: 'Apply Terraform ?')
             }
         }
-        stage('Terraform Apply') {
+        stage("Terraform Apply") {
             steps {
                 terraformApply()
             }
         }
-        stage('Setup Ansible Env') {
+        stage("Setup Ansible Env") {
             when { 
                 expression {
                     return params.Action == 'Build'
@@ -74,7 +74,7 @@ pipeline {
                 """)
             }
         }
-        stage('Apply Ansible if Any') {
+        stage("Apply Ansible if Any") {
             when { 
                 expression {
                     return params.Action == 'Build'

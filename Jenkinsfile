@@ -7,7 +7,7 @@ pipeline {
         AWS_PROFILE                 = "pinfos"
         AWS_ACCESS_KEY_ID           = credentials('jenkins-aws-key-id')
         AWS_SECRET_ACCESS_KEY       = credentials('jenkins-aws-key-value')
-        VAULT_ADDR                  = "https://hvp.akeyless.io",
+        VAULT_ADDR                  = "https://hvp.akeyless.io"
         HOOK                        = credentials('msteams-webhook')
     }
 

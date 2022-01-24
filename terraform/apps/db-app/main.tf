@@ -19,7 +19,7 @@ module "db" {
   cluster     = local.cluster
   vm_name     = var.vm["name"]
   vm_count    = var.vm["count"]
-  vm_template = "centos8_packer_template"
+  vm_template = var.vm_template
   network_id  = data.vsphere_network.segment.id
   tag_scope   = "Tier"
   tag         = "DB"

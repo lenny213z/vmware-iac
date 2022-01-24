@@ -19,7 +19,7 @@ module "web" {
   cluster     = local.cluster
   vm_name     = var.vm["name"]
   vm_count    = var.vm["count"]
-  vm_template = "centos8_packer_template"
+  vm_template = var.vm_template
   network_id  = data.vsphere_network.segment.id
   tag_scope   = "Tier"
   tag         = "Web"
@@ -34,9 +34,9 @@ module "web-lb" {
     description = "Web LB"
   }
   vip = {
-    name        = "web-vip"
-    description = "Web VIP"
-    ipaddrv4    = "10.65.52.5"
+    name        = var.vip["name"]
+    description = var.vip["description"]
+    ipaddrv4    = var.vip["ipaddrv4"]
   }
   vip_ports = ["80", "443"]
   pool = {

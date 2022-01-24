@@ -163,7 +163,7 @@ def terraformApply() {
         ln -s -f ${workspace}/environment/${params.Env.toLowerCase()}/${params.Apps.toLowerCase()}.tfvars ${workspace}/terraform/apps/${params.Apps.toLowerCase()}/env.auto.tfvars
         cd ./terraform/apps/${params.Apps.toLowerCase()};
         terraform apply tfout -no-color
-        terraform output | awk '{match($0,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/); ip = substr($0,RSTART,RLENGTH); print ip}' | awk 'NF >0' > ../../../inspec/files/output
+        terraform output | awk -f ../../../bin/awk | awk 'NF >0' > ../../../inspec/files/output
     """)
 }
 
@@ -183,7 +183,7 @@ def applyAnsible () {
 }
 
 def inspecValidation () {
-    sh ("""
+    sh ("""#!/bin/bash
         while read -r h; do inspec exec -t ssh://ansible@$h -i ./secrets/ssh-keys/ansible --sudo ./inspec/vm & done < ./inspec/files/output
     """)
 }

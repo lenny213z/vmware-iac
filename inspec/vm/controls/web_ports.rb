@@ -1,6 +1,6 @@
 # copyright: 2018, The Authors
 
-title 'Open Ports'
+title 'Open Web Ports'
 
 # you add controls here
 control 'http or https' do

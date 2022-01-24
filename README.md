@@ -85,10 +85,9 @@ The Jenkins server uses the provided declarative pipeline to fetch and build the
 - Github Actions are used for managing the format for terraform and ansible
 
 To-Do
-- github secrets
-- inspec
+- Chef InSpec
 
 # Further Development (example)
-- Add Monitoring with Splunk, but either adding Splunk Agent to the Packer template or adding it as a task in ansible playbook
+- Add Monitoring with Splunk, by either adding Splunk Agent to the Packer template or adding it as a task in ansible playbook
 - Develop Documentation on how to use the Terraform Modules
 - Work with Akeyless to fix Jenkins Integration. 

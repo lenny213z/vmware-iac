@@ -189,4 +189,5 @@ def inspecValidation () {
         sh ("""
             inspec exec -t ssh://ansible@$i -i ./secret/ssh-keys/ansible --sudo ./inspec/vn
         """)
+    }   
 }

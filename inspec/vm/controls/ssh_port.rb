@@ -11,5 +11,4 @@ control 'ssh' do
     it { should be_listening }
     its('protocols') {should include 'tcp'}
   end
-  end
 end

@@ -80,6 +80,11 @@ Jenkins is an open-source automation server that can support any team for build 
 
 The Jenkins server uses the provided declarative pipeline to fetch and build the provided terraform and ansible code. The pipeline uses the JenkinsFile in the repo. The Pipeline is run manually onPrem and requires the selection of the environment, application and action to be applied. The pipeline can be used for both Building and Destroying the infrastructure. Jenkins is integrated with MS Teams for Notifications. 
 
+Additional Plugins Used:
+- Hashicorp Vault
+- Hashicorp Vault Pipeline
+- Office 365 Connector
+
 # Security and Tests 
 
 - The demo uses centralized vault manager that stores all static secrets, ssh-keys and secret files where needed. 

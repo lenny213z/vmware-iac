@@ -184,7 +184,8 @@ def applyAnsible () {
 }
 
 def inspecValidation () {
-    sh ("""#!/bin/bash
+    sh ("""
+        cat ./inspect/files/output
         while read -r h; do inspec exec -t ssh://ansible@$h -i ./secrets/ssh-keys/ansible --sudo ./inspec/vm & done < ./inspec/files/output
     """)
 }

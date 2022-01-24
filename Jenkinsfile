@@ -184,11 +184,15 @@ def applyAnsible () {
 }
 
 def inspecValidation () {
-    sh ("""
-        cat ./inspec/files/output
-        inspec exec --chef-license=accept-silent -t ssh://ansible@10.65.52.10 -i "${ssh}" --sudo ./inspec/vm
-        inspec exec --chef-license=accept-silent -t ssh://ansible@10.65.52.11 -i "${ssh}" --sudo ./inspec/vm
-    """)
+    withCredentials([
+        sshUserPrivateKey(credentialsId: 'ansible_ssh', keyFileVariable: 'ssh')
+        ]) 
+    {
+        sh ("""
+            cat ./inspec/files/output
+            inspec exec --chef-license=accept-silent -t ssh://ansible@10.65.52.10 -i "${ssh}" --sudo ./inspec/vm
+            inspec exec --chef-license=accept-silent -t ssh://ansible@10.65.52.11 -i "${ssh}" --sudo ./inspec/vm
+        """)
 }
 
 

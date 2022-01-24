@@ -67,8 +67,8 @@ pipeline {
                     steps {
                         sh "echo Hi"
                         office365ConnectorSend webhookUrl: credentials('msteams-webhook')
-                            message: "Application ${params.Apps} is waiting for an Aproval for Action - ${params.Action}",
-                            status: "Progress"
+                            status: 'Progress',
+                            message: "Application ${params.Apps} is waiting for an Aproval for Action - ${params.Action}"
                     }
                 }
             }

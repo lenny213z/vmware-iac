@@ -8,6 +8,8 @@ pipeline {
                     notifyFailure: true,
                         url: credentials('msteams-webhook')
             ]]
+        )
+    }
 
     environment {
         TF_VAR_AKEYLESS_ACCESS_ID   = credentials('jenkins-akeyless-key-id')

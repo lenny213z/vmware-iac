@@ -1,4 +1,5 @@
 environment/*/*.vmware.yaml
+environment/*/tmp/*
 inspec/files/*
 secrets/ssh-keys/*
 secrets/ansible-vault/*

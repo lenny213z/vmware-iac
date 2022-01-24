@@ -1,16 +1,6 @@
 pipeline {
     agent any
 
-    options {
-        office365ConnectorWebhooks([[
-                    startNotification: true,
-                    notifySuccess: true,
-                    notifyFailure: true,
-                        url: "${WHOOK}"
-            ]]
-        )
-    }
-
     environment {
         TF_VAR_AKEYLESS_ACCESS_ID   = credentials('jenkins-akeyless-key-id')
         TF_VAR_AKEYLESS_ACCESS_KEY  = credentials('jenkins-akeyless-key-value')
@@ -19,6 +9,16 @@ pipeline {
         AWS_SECRET_ACCESS_KEY       = credentials('jenkins-aws-key-value')
         VAULT_ADDR                  = "https://hvp.akeyless.io"
         WHOOK                       = "https://telerikacademy.webhook.office.com/webhookb2/13ff287a-b7d5-4dd9-bc57-e34a92c39682@b1720f58-a86a-437a-b829-7a6e544e48ac/JenkinsCI/ac745aa388e64095a5a72a71a9b054a0/7f620d79-3b67-453c-a1ae-7197c0f0e9ea"         
+    }
+
+    options {
+        office365ConnectorWebhooks([[
+                    startNotification: true,
+                    notifySuccess: true,
+                    notifyFailure: true,
+                        url: "${WHOOK}"
+            ]]
+        )
     }
 
     parameters {

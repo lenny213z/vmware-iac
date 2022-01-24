@@ -192,6 +192,7 @@ def inspecValidation () {
             inspec exec --chef-license=accept-silent -t ssh://ansible@10.65.52.10 -i "${ssh}" --sudo ./inspec/vm
             inspec exec --chef-license=accept-silent -t ssh://ansible@10.65.52.11 -i "${ssh}" --sudo ./inspec/vm
         """)
+        }
 }
 
 

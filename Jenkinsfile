@@ -1,16 +1,6 @@
 pipeline {
     agent any
 
-    options {
-        office365ConnectorWebhooks([[
-                    startNotification: true,
-                    notifySuccess: true,
-                    notifyFailure: true,
-                        url: credentials('msteams-webhook')
-            ]]
-        )
-    }
-
     environment {
         TF_VAR_AKEYLESS_ACCESS_ID   = credentials('jenkins-akeyless-key-id')
         TF_VAR_AKEYLESS_ACCESS_KEY  = credentials('jenkins-akeyless-key-value')
@@ -18,6 +8,17 @@ pipeline {
         AWS_ACCESS_KEY_ID           = credentials('jenkins-aws-key-id')
         AWS_SECRET_ACCESS_KEY       = credentials('jenkins-aws-key-value')
         VAULT_ADDR                  = "https://hvp.akeyless.io"
+        MS_TEAMS_WH                 = credentials('msteams-webhook')
+    }
+
+    options {
+        office365ConnectorWebhooks([[
+                    startNotification: true,
+                    notifySuccess: true,
+                    notifyFailure: true,
+                        url: "${env.MS_TEAMS_WH}"
+            ]]
+        )
     }
 
     parameters {
@@ -66,7 +67,7 @@ pipeline {
                 stage('Notify in Teams') {
                     steps {
                         sh "echo Hi"
-                        office365ConnectorSend webhookUrl: credentials('msteams-webhook'),
+                        office365ConnectorSend webhookUrl: "${env.MS_TEAMS_WH}",
                             message: "Application ${params.Apps} is waiting for an Aproval for Action - ${params.Action}"
                     }
                 }

@@ -200,7 +200,7 @@ def inspecValid() {
         sshUserPrivateKey(credentialsId: 'ansible_ssh', keyFileVariable: 'ssh')
         ]) {
         sh ("""
-            while read -r h; do inspec exec -t ssh://ansible@\$h -i "${$ssh}" --sudo ./inspec/vm ; done < ./inspec/files/output
+            while read -r h; do inspec exec -t ssh://ansible@\$h -i "${ssh}" --sudo ./inspec/vm ; done < ./inspec/files/output
         """)
         }
 }

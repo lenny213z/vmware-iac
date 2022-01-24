@@ -5,8 +5,7 @@ pipeline {
         office365ConnectorWebhooks([[
                     startNotification: true,
                     notifySuccess: true,
-                    notifyFailure: true,
-                        url: "${env.MS_TEAMS_WH}"
+                    notifyFailure: true
             ]]
         )
     }
@@ -67,7 +66,7 @@ pipeline {
                 stage('Notify in Teams') {
                     steps {
                         sh "echo Hi"
-                        office365ConnectorSend webhookUrl: "${env.MS_TEAMS_WH}",
+                        office365ConnectorSend
                             message: "Application ${params.Apps} is waiting for an Aproval for Action - ${params.Action}"
                     }
                 }

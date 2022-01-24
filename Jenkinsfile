@@ -186,8 +186,8 @@ def applyAnsible () {
 def inspecValidation () {
     sh ("""
         cat ./inspec/files/output
-        inspec exec -t ssh://ansible@10.65.52.10 -i ./secret/ssh-keys/ansible --sudo ./inspec/vm
-        inspec exec -t ssh://ansible@10.65.52.11 -i ./secret/ssh-keys/ansible --sudo ./inspec/vm
+        inspec exec --chef-license=accept-silent -t ssh://ansible@10.65.52.10 -i ./secret/ssh-keys/ansible --sudo ./inspec/vm
+        inspec exec --chef-license=accept-silent -t ssh://ansible@10.65.52.11 -i ./secret/ssh-keys/ansible --sudo ./inspec/vm
     """)
 }
 

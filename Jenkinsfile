@@ -66,8 +66,7 @@ pipeline {
                 stage('Notify in Teams') {
                     steps {
                         sh "echo Hi"
-                        office365ConnectorSend webhookUrl: credentials('msteams-webhook')
-                            status: "Pipeline Status",
+                        office365ConnectorSend webhookUrl: credentials('msteams-webhook'),
                             message: "Application ${params.Apps} is waiting for an Aproval for Action - ${params.Action}"
                     }
                 }

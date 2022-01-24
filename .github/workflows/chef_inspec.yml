@@ -28,4 +28,4 @@ jobs:
     # Run Ansible Lint
     - name: 'Execute Chef Inspec Check'
       run: |
-        for d in ./inspec/*/; inspec check --chef-license=accept-silent $d
+        for d in ./inspec/\*/; inspec check --chef-license=accept-silent \$d

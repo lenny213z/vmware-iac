@@ -192,3 +192,12 @@ def inspecValidation () {
         """)
     }   
 }
+
+@NonCPS
+List extractLines(final String content) {
+    List myIPs = []
+    content.eachLine { line -> 
+        myKeys << line
+    }
+    return myIPs
+}

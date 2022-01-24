@@ -184,8 +184,9 @@ def applyAnsible () {
 }
 
 def inspecValidation () {
-    def data = readFile(file: './inspec/files/output')
-    for (i in data.eachLine) {
+    final String content = readFile(file: './inspec/files/output')
+    final List myIPs = extractLines(content)
+    for (i in MyIPs) {
         sh ("""
             inspec exec -t ssh://ansible@$i -i ./secret/ssh-keys/ansible --sudo ./inspec/vn
         """)

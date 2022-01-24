@@ -163,8 +163,8 @@ def terraformApply() {
         ln -s -f ${workspace}/environment/${params.Env.toLowerCase()}/${params.Apps.toLowerCase()}.tfvars ${workspace}/terraform/apps/${params.Apps.toLowerCase()}/env.auto.tfvars
         cd ./terraform/apps/${params.Apps.toLowerCase()};
         terraform apply tfout -no-color
-        mkdir ../../../inspec/files
-        terraform output | awk -f ../../../bin/awk | awk 'NF >0' > ../../../inspec/files/output
+        mkdir ../../../environment/${params.Env.toLowerCase()}/tmp
+        terraform output | awk -f ../../../bin/awk | awk 'NF >0' > ../../../environment/${params.Env.toLowerCase()}/tmp/output
     """)
 }
 
@@ -188,7 +188,7 @@ def inspecValidation() {
         sshUserPrivateKey(credentialsId: 'ansible_ssh', keyFileVariable: 'ssh')
         ]) {
         sh ("""
-            while read -r h; do inspec exec -t ssh://ansible@\$h -i "${ssh}" --sudo ./inspec/vm ; done < ./inspec/files/output
+            while read -r h; do inspec exec -t ssh://ansible@\$h -i "${ssh}" --sudo ./inspec/vm ; done < ./environment/${params.Env.toLowerCase()}/tmp/output
         """)
         }
 }

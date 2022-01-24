@@ -121,7 +121,7 @@ pipeline {
                     return params.Apps == 'Web-App'
                 }
             }
-            sptes {
+            steps {
                 inspecValidation()
             }
         }

@@ -197,7 +197,7 @@ def inspecValidation () {
 List extractLines(final String content) {
     List myIPs = []
     content.eachLine { line -> 
-        myKeys << line
+        myIPs << line
     }
     return myIPs
 }

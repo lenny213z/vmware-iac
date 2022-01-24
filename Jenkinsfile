@@ -1,16 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        TF_VAR_AKEYLESS_ACCESS_ID   = credentials('jenkins-akeyless-key-id')
-        TF_VAR_AKEYLESS_ACCESS_KEY  = credentials('jenkins-akeyless-key-value')
-        AWS_PROFILE                 = "pinfos"
-        AWS_ACCESS_KEY_ID           = credentials('jenkins-aws-key-id')
-        AWS_SECRET_ACCESS_KEY       = credentials('jenkins-aws-key-value')
-        VAULT_ADDR                  = "https://hvp.akeyless.io"
-        MS_TEAMS_WH                 = credentials('msteams-webhook')
-    }
-
     options {
         office365ConnectorWebhooks([[
                     startNotification: true,
@@ -19,6 +9,16 @@ pipeline {
                         url: "${env.MS_TEAMS_WH}"
             ]]
         )
+    }
+
+    environment {
+        TF_VAR_AKEYLESS_ACCESS_ID   = credentials('jenkins-akeyless-key-id')
+        TF_VAR_AKEYLESS_ACCESS_KEY  = credentials('jenkins-akeyless-key-value')
+        AWS_PROFILE                 = "pinfos"
+        AWS_ACCESS_KEY_ID           = credentials('jenkins-aws-key-id')
+        AWS_SECRET_ACCESS_KEY       = credentials('jenkins-aws-key-value')
+        VAULT_ADDR                  = "https://hvp.akeyless.io"
+        MS_TEAMS_WH                 = credentials('msteams-webhook')
     }
 
     parameters {

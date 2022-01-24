@@ -112,6 +112,20 @@ pipeline {
                 applyAnsible()
             }
         }
+        stage('Chef Inspec for Web-App') {
+            when {
+                expression {
+                    return params.Action == 'Build'
+                }
+                expression {
+                    return params.Apps == 'Web-App'
+                }
+            }
+            sptes {
+                inspecValidation()
+            }
+        }
+        
     }
     post {
         always {
@@ -149,6 +163,7 @@ def terraformApply() {
         ln -s -f ${workspace}/environment/${params.Env.toLowerCase()}/${params.Apps.toLowerCase()}.tfvars ${workspace}/terraform/apps/${params.Apps.toLowerCase()}/env.auto.tfvars
         cd ./terraform/apps/${params.Apps.toLowerCase()};
         terraform apply tfout -no-color
+        terraform output | awk '{match($0,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/); ip = substr($0,RSTART,RLENGTH); print ip}' | awk 'NF >0' > ../../../inspec/files/output
     """)
 }
 
@@ -165,4 +180,10 @@ def applyAnsible () {
                 ansible-playbook -i "${host}" "${workspace}/ansible/${params.Apps.toLowerCase()}.yaml" --key-file "${ssh}" --vault-password-file "${vault}"
             """)
         }
+}
+
+def inspecValidation () {
+    sh ("""
+        while read -r h; do inspec exec -t ssh://ansible@$h -i ./secrets/ssh-keys/ansible --sudo ./inspec/vm & done < ./inspec/files/output
+    """)
 }

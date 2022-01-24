@@ -163,6 +163,7 @@ def terraformApply() {
         ln -s -f ${workspace}/environment/${params.Env.toLowerCase()}/${params.Apps.toLowerCase()}.tfvars ${workspace}/terraform/apps/${params.Apps.toLowerCase()}/env.auto.tfvars
         cd ./terraform/apps/${params.Apps.toLowerCase()};
         terraform apply tfout -no-color
+        mkdir ../../../inspec/files
         terraform output | awk -f ../../../bin/awk | awk 'NF >0' > ../../../inspec/files/output
     """)
 }

@@ -7,7 +7,8 @@ pipeline {
         AWS_PROFILE                 = "pinfos"
         AWS_ACCESS_KEY_ID           = credentials('jenkins-aws-key-id')
         AWS_SECRET_ACCESS_KEY       = credentials('jenkins-aws-key-value')
-        VAULT_ADDR                  = "https://hvp.akeyless.io"
+        VAULT_ADDR                  = "https://hvp.akeyless.io",
+        HOOK                        = credentials('msteams-webhook')
     }
 
     options {
@@ -15,7 +16,7 @@ pipeline {
                     startNotification: true,
                     notifySuccess: true,
                     notifyFailure: true,
-                        url: 'https://telerikacademy.webhook.office.com/webhookb2/13ff287a-b7d5-4dd9-bc57-e34a92c39682@b1720f58-a86a-437a-b829-7a6e544e48ac/JenkinsCI/ac745aa388e64095a5a72a71a9b054a0/7f620d79-3b67-453c-a1ae-7197c0f0e9ea'
+                        url: "${env.HOOK}"
             ]]
         )
     }
@@ -66,8 +67,8 @@ pipeline {
                 stage('Notify in Teams') {
                     steps {
                         office365ConnectorSend (
-                            webhookUrl: 'https://telerikacademy.webhook.office.com/webhookb2/13ff287a-b7d5-4dd9-bc57-e34a92c39682@b1720f58-a86a-437a-b829-7a6e544e48ac/JenkinsCI/ac745aa388e64095a5a72a71a9b054a0/7f620d79-3b67-453c-a1ae-7197c0f0e9ea',
-                            message: "Application ${params.Apps} is waiting for an Aproval for Action - ${params.Action}"
+                            webhookUrl: "${env.HOOK}",
+                            message: "The **${params.Apps}** Application is waiting for an Aproval for Action - **${params.Action}**"
                         )
                     }
                 }

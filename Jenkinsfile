@@ -184,8 +184,9 @@ def applyAnsible () {
 }
 
 def inspecValidation () {
-    h ="\$h"
-    sh ("""
-        while read -r h; do inspec exec -t ssh://ansible@'''+h+''' -i ./secrets/ssh-keys/ansible --sudo ./inspec/vm ; done < ./inspec/files/output
-    """)
+    def data = readFile(file: './inspec/files/output')
+    for (i in data.eachLine) {
+        sh ("""
+            inspec exec -t ssh://ansible@$i -i ./secret/ssh-keys/ansible --sudo ./inspec/vn
+        """)
 }

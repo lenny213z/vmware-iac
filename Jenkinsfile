@@ -188,13 +188,13 @@ def inspecValidation () {
     final List myIPs = extractLines(content)
     for (i in MyIPs) {
         sh ("""
-            inspec exec -t ssh://ansible@$i -i ./secret/ssh-keys/ansible --sudo ./inspec/vn
+            inspec exec -t ssh://ansible@$i -i ./secret/ssh-keys/ansible --sudo ./inspec/vm
         """)
     }   
 }
 
 @NonCPS
-List extractLines(final String content) {
+def extractLines(final String content) {
     List myIPs = []
     content.eachLine { line -> 
         myIPs << line

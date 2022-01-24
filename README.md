@@ -84,9 +84,8 @@ The Jenkins server uses the provided declarative pipeline to fetch and build the
 
 - The demo uses centralized vault manager that stores all static secrets, ssh-keys and secret files where needed. 
 - Github Actions are used for managing the format for terraform and ansible
+- Chef InSpec is used to to a simple validation checks for the created VMs
 
-To-Do
-- Chef InSpec
 
 # Further Development (example)
 - Add Monitoring with Splunk, by either adding Splunk Agent to the Packer template or adding it as a task in ansible playbook

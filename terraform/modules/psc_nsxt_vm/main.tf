@@ -1,28 +1,3 @@
-# This resource will destroy (potentially immediately) after null_resource.next
-#resource "null_resource" "previous" {}
-#
-#resource "time_sleep" "wait_30_seconds" {
-#  depends_on = [null_resource.previous]
-#  create_duration = "30s"
-#}
-
-#resource "vsphere_tag_category" "category" {
-#  name        = "${var.tag_scope}"
-#  cardinality = "SINGLE"
-#  description = "Managed by Terraform"
-#
-#  associable_types = [
-#    "VirtualMachine",
-#    "Datastore",
-#  ]
-#}
-
-#resource "vsphere_tag" "tag" {
-#  name        = "${var.tag}"
-#  category_id = "${vsphere_tag_category.category.id}"
-#  description = "Managed by Terraform"
-#}
-
 # This part creates the Virtual Machines in Vsphere that are needed for the App
 resource "vsphere_virtual_machine" "vm" {
   count            = var.vm_count

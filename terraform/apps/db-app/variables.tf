@@ -6,6 +6,10 @@ variable "vm" {
   }
 }
 
+variable "vm_template" {
+  type = string
+}
+
 variable "AKEYLESS_ACCESS_ID" {
   type        = string
   description = "Define Environment Variable TF_VAR_AKEYLESS_ID"

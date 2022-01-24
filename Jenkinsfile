@@ -1,6 +1,14 @@
 pipeline {
     agent any
 
+    options {
+        office365ConnectorWebhooks([[
+                    startNotification: true,
+                    notifySuccess: true,
+                    notifyFailure: true,
+                        url: credentials('msteams-webhook')
+            ]]
+
     environment {
         TF_VAR_AKEYLESS_ACCESS_ID   = credentials('jenkins-akeyless-key-id')
         TF_VAR_AKEYLESS_ACCESS_KEY  = credentials('jenkins-akeyless-key-value')
@@ -47,8 +55,18 @@ pipeline {
             }
         }
         stage('Approval') {
-            steps {
-                input(message: 'Apply Terraform ?')
+            parallel {
+                stage('Wait for Approval') {
+                    steps {
+                        input(message: 'Apply Terraform ?')
+                    }
+                }
+                stage('Notify in Teams') {
+                    steps {
+                        office365ConnectorSend webhookUrl: credentials('msteams-webhook')
+                            message: "Application ${params.Apps} is waiting for an Aproval for Action - ${params.Action}"
+                    }
+                }
             }
         }
         stage('Terraform Apply') {

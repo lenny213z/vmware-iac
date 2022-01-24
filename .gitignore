@@ -1,4 +1,5 @@
 environment/*/*.vmware.yaml
+inspec/files/*
 secrets/ssh-keys/*
 secrets/ansible-vault/*
 terraform/*/*terraform*

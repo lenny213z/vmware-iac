@@ -184,20 +184,11 @@ def applyAnsible () {
 }
 
 def inspecValidation () {
-    final String content = readFile(file: './inspec/files/output')
-    final List myIPs = extractLines(content)
-    for (i in MyIPs) {
-        sh ("""
-            inspec exec -t ssh://ansible@$i -i ./secret/ssh-keys/ansible --sudo ./inspec/vm
-        """)
-    }   
+    sh ("""
+        cat ./inspec/files/output
+        inspec exec -t ssh://ansible@10.65.52.10 -i ./secret/ssh-keys/ansible --sudo ./inspec/vm
+        inspec exec -t ssh://ansible@10.65.52.11 -i ./secret/ssh-keys/ansible --sudo ./inspec/vm
+    """)
 }
 
-@NonCPS
-def extractLines(final String content) {
-    List myIPs = []
-    content.eachLine { line -> 
-        myIPs << line
-    }
-    return myIPs
-}
+

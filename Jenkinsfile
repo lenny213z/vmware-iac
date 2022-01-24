@@ -65,9 +65,9 @@ pipeline {
                 }
                 stage('Notify in Teams') {
                     steps {
-                        sh "echo Hi"
-                        office365ConnectorSend
+                        office365ConnectorSend (
                             message: "Application ${params.Apps} is waiting for an Aproval for Action - ${params.Action}"
+                        )
                     }
                 }
             }

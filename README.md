@@ -20,8 +20,9 @@ Ideally, the following process can be used to proper use / test the demo.
 4. Commit and Push the Changes to the repo and Open a Pull Request 
 5. Github Actions will check for proper formatting for Terraform and Ansible
 6. The Jenkins Pipeline will fetch the latest JenkinsFile from the repo and run the pipeline locally (manually)
-7. The local node will build the environment to apply terraform and ansible 
-8. It's required to select the Env, App and the Action (Build, or Destroy) to run the Jenkins Pipeline 
+7. It's required to select the Env, App and the Action (Build, or Destroy) to run the Jenkins Pipeline 
+8. The Pipeline will wait for an Approval. A Notification will be send to MS Teams channel. 
+9. The local node will build the environment to apply terraform and ansible 
 
 ## Used Technologies
 
@@ -77,7 +78,7 @@ The ansible playbooks are applied automatically with **bin/apply.sh** if the rig
 ## Jenkins
 Jenkins is an open-source automation server that can support any team for build a CI/CD process for their project. 
 
-The Jenkins server uses the provided declarative pipeline to fetch and build the provided terraform and ansible code. The pipeline uses the JenkinsFile in the repo. The Pipeline is run manually onPrem and requires the selection of the environment, application and action to be applied. The pipeline can be used for both Building and Destroying the infrastructure. 
+The Jenkins server uses the provided declarative pipeline to fetch and build the provided terraform and ansible code. The pipeline uses the JenkinsFile in the repo. The Pipeline is run manually onPrem and requires the selection of the environment, application and action to be applied. The pipeline can be used for both Building and Destroying the infrastructure. Jenkins is integrated with MS Teams for Notifications. 
 
 # Security and Tests 
 

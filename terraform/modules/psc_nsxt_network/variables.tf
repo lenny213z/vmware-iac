@@ -1,10 +1,3 @@
-variable "nsx_t1gw" {
-  type = map(any)
-  default = {
-    name        = ""
-    description = ""
-  }
-}
 
 variable "nsxt_tag_scope" {
   type    = string
@@ -14,16 +7,6 @@ variable "nsxt_tag_scope" {
 variable "nsxt_tag" {
   type    = string
   default = "terraform"
-}
-
-variable "tag_scope" {
-  type    = string
-  default = ""
-}
-
-variable "tag" {
-  type    = string
-  default = ""
 }
 
 variable "nsxt_segment" {

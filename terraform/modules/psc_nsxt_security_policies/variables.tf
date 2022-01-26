@@ -40,15 +40,17 @@ variable "nsxt_tag" {
 
 variable "rules" {
   type = list(object({
-    name   = string
-    action = string
-    src    = list(string)
-    dst    = list(string)
+    name     = string
+    action   = string
+    src      = list(string)
+    dst      = list(string)
+    services = list(string)
   }))
   default = [{
-    name   = ""
-    action = "DROP"
-    src    = ["any"]
-    dst    = ["any"]
+    name     = ""
+    action   = "DROP"
+    src      = ["any"]
+    dst      = ["any"]
+    services = ["any"]
   }]
 }

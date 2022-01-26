@@ -27,6 +27,6 @@ data "vsphere_datacenter" "datacenter" {
 }
 
 data "vsphere_network" "segment" {
-  name          = data.terraform_remote_state.base.outputs.name["Web"][0]
+  name          = data.terraform_remote_state.base.outputs.name["default"][0]
   datacenter_id = data.vsphere_datacenter.datacenter.id
 }

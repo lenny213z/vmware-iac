@@ -8,12 +8,8 @@ resource "nsxt_policy_lb_service" "lb" {
   connectivity_path = var.connectivity_path
 
   tag {
-    scope = var.tag_scope
-    tag   = var.tag
-  }
-  tag {
     scope = var.nsxt_tag_scope
-    tag   = var.nsxt_tag
+    tag   = var.tag
   }
 }
 # This Resource creates and configures a LB server pool if needed
@@ -31,12 +27,8 @@ resource "nsxt_policy_lb_pool" "pool" {
   }
 
   tag {
-    scope = var.tag_scope
-    tag   = var.tag
-  }
-  tag {
     scope = var.nsxt_tag_scope
-    tag   = var.nsxt_tag
+    tag   = var.tag
   }
 }
 #This Resource creates and configures a VIP for the LB if needed
@@ -52,11 +44,7 @@ resource "nsxt_policy_lb_virtual_server" "vip" {
   pool_path                = nsxt_policy_lb_pool.pool.path
 
   tag {
-    scope = var.tag_scope
-    tag   = var.tag
-  }
-  tag {
     scope = var.nsxt_tag_scope
-    tag   = var.nsxt_tag
+    tag   = var.tag
   }
 }

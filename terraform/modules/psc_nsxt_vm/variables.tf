@@ -1,20 +1,7 @@
 
-variable "tag_scope" {
-  type    = string
-  default = ""
-}
-
 variable "tag" {
   type    = string
   default = ""
-}
-
-variable "nsxt_group" {
-  type = map(any)
-  default = {
-    name        = ""
-    description = ""
-  }
 }
 
 variable "network_id" {

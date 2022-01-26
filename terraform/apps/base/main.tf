@@ -14,17 +14,6 @@ resource "nsxt_policy_tier1_gateway" "t1_gw" {
   pool_allocation           = "ROUTING"
 }
 #
-resource "vsphere_tag_category" "category" {
-  name        = "Tier"
-  cardinality = "SINGLE"
-  description = "Managed by Terraform"
-
-  associable_types = [
-    "VirtualMachine",
-    "Datastore",
-  ]
-}
-#
 module "segment" {
   source   = "../../modules/psc_nsxt_network"
   for_each = { for segment in var.nsxt_segment : segment.name => segment }
@@ -35,7 +24,6 @@ module "segment" {
     dhcp_ranges = each.value.dhcp_ranges
   }
 
-  tag_scope         = "Tier"
   connectivity_path = nsxt_policy_tier1_gateway.t1_gw.path
 }
 #

@@ -1,3 +1,23 @@
+#
+# All Virtual machines with specific tag and scope
+resource "nsxt_policy_group" "nsxt_group" {
+  display_name = var.nsxt_tag_scope
+  description  = "Autogenerate Group for VMs with the defined tag"
+  criteria {
+    condition {
+      member_type = "VirtualMachine"
+      operator    = "CONTAINS"
+      key         = "Tag"
+      value       = "${var.nsxt_tag_scope}|${var.tag}"
+
+    }
+  }
+  tag {
+    scope = var.nsxt_tag_scope
+    tag   = var.tag
+  }
+}
+
 # This part creates the Virtual Machines in Vsphere that are needed for the App
 resource "vsphere_virtual_machine" "vm" {
   count            = var.vm_count
@@ -43,10 +63,6 @@ resource "nsxt_policy_vm_tags" "vm_tag" {
   ]
   tag {
     scope = var.nsxt_tag_scope
-    tag   = var.nsxt_tag
-  }
-  tag {
-    scope = var.tag_scope
     tag   = var.tag
   }
 }

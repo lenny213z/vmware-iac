@@ -25,6 +25,7 @@ resource "nsxt_policy_security_policy" "firewall_section" {
       action             = rule.value.action
       source_groups      = rule.value.src
       destination_groups = rule.value.dst
+      services           = rule.value.services
     }
   }
   # Allow all other communications 
